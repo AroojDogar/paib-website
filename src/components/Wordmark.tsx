@@ -11,13 +11,13 @@ export default function Wordmark({
     <div className="leading-none">
       <div
         className={`font-display text-3xl font-extrabold tracking-tight ${
-          onDark ? "text-white" : "text-paib-navy"
+          onDark ? "text-white" : "text-ink"
         }`}
       >
         PAIB
       </div>
       {showTagline && (
-        <div className="mt-1 font-mono text-[10px] tracking-[0.25em] text-paib-blue">
+        <div className="mt-1 font-mono text-[10px] tracking-[0.25em] text-gold">
           {site.tagline.join(" | ")}
         </div>
       )}

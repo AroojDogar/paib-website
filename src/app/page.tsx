@@ -1,14 +1,21 @@
+import Hero from "@/components/Hero";
+import Marquee from "@/components/Marquee";
+import Pillars from "@/components/Pillars";
+import AgenticAI from "@/components/AgenticAI";
+import ProjectsPreview from "@/components/ProjectsPreview";
+import TeamSection from "@/components/TeamSection";
+import JoinCta from "@/components/JoinCta";
+
 export default function Home() {
   return (
-    <section className="flex min-h-[70vh] items-center bg-ink text-white">
-      <div className="mx-auto max-w-6xl px-5">
-        <p className="font-mono text-sm tracking-[0.3em] text-paib-green">
-          LEARN • BUILD • EARN
-        </p>
-        <h1 className="mt-4 font-display text-5xl font-extrabold md:text-7xl">
-          Pakistan Artificial Intelligence and Blockchain
-        </h1>
-      </div>
-    </section>
+    <>
+      <Hero />
+      <Marquee />
+      <Pillars />
+      <AgenticAI />
+      <ProjectsPreview />
+      <TeamSection />
+      <JoinCta />
+    </>
   );
 }

@@ -6,15 +6,11 @@ export const site = {
     "Learn emerging technology, build real AI and blockchain solutions, and turn those skills into professional and business opportunities.",
 
   // Reference data from the old site. Update when official details are confirmed.
-  contact: {
-    emails: ["info@paib.pk", "support@paib.pk"],
-    phone: "+92 333 7414152",
-    address: "Constitution Avenue, Islamabad, Pakistan",
-    hours: [
-      "Monday–Friday: 9 AM–6 PM",
-      "Saturday: 10 AM–4 PM",
-      "Sunday: Closed",
-    ],
+    contact: {
+    emails: ["info@paib.pk"],
+    phone: "", // add later
+    address: "", // add later
+    hours: [] as string[], 
   },
 
   // Add official URLs here. Empty ones are hidden automatically.

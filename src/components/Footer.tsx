@@ -14,7 +14,7 @@ export default function Footer() {
         </div>
 
         <div className="text-sm">
-          <div className="mb-3 font-mono text-xs tracking-widest text-paib-blue">
+          <div className="mb-3 font-mono text-xs tracking-widest text-gold">
             EXPLORE
           </div>
           <ul className="space-y-2">
@@ -29,15 +29,15 @@ export default function Footer() {
         </div>
 
         <div className="text-sm">
-          <div className="mb-3 font-mono text-xs tracking-widest text-paib-blue">
+          <div className="mb-3 font-mono text-xs tracking-widest text-gold">
             CONTACT
           </div>
-          <ul className="space-y-2">
+                   <ul className="space-y-2">
             {site.contact.emails.map((e) => (
               <li key={e}>{e}</li>
             ))}
-            <li>{site.contact.phone}</li>
-            <li>{site.contact.address}</li>
+            {site.contact.phone && <li>{site.contact.phone}</li>}
+            {site.contact.address && <li>{site.contact.address}</li>}
           </ul>
           {socials.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-4">

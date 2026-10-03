@@ -3,6 +3,7 @@ import { Inter, Sora, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Assistant from "@/components/Assistant";
 import { site } from "@/data/site";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -14,8 +15,18 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${site.name} | ${site.fullName}`,
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  title: {
+    default: `${site.name} | ${site.fullName}`,
+    template: `%s`,
+  },
   description: site.description,
+  openGraph: {
+    title: `${site.name} | ${site.fullName}`,
+    description: site.description,
+    siteName: site.name,
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -32,6 +43,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <Assistant />
       </body>
     </html>
   );
