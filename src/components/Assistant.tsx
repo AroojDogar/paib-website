@@ -1,83 +1,132 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { faqs } from "@/data/faq";
-import { site } from "@/data/site";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { faqs, starterIds, fallback, type Faq } from "@/data/faq";
+import { matchFaq } from "@/lib/matchFaq";
 
-type Msg = { from: "user" | "bot"; text: string };
+type Msg = {
+  from: "user" | "bot";
+  text: string;
+  link?: { label: string; href: string };
+  next?: Faq[];
+};
 
-function findAnswer(input: string): string {
-  const text = input.toLowerCase();
-  let best = { score: 0, a: "" };
-  for (const f of faqs) {
-    const score = f.keywords.reduce((s, k) => (text.includes(k) ? s + k.length : s), 0);
-    if (score > best.score) best = { score, a: f.a };
-  }
-  return (
-    best.a ||
-    `I can help with questions about PAIB, our programs, services and how to join or work with us. For anything else, please email ${site.contact.emails[0]}.`
-  );
-}
+const byId = (ids: string[]) =>
+  ids.map((id) => faqs.find((f) => f.id === id)).filter(Boolean) as Faq[];
+
+const intro: Msg = {
+  from: "bot",
+  text: "Hi! I'm the PAIB Knowledge Assistant. Ask me about PAIB, our programs, services or how to get involved.",
+  next: byId(starterIds),
+};
 
 export default function Assistant() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
-  const [msgs, setMsgs] = useState<Msg[]>([
-    {
-      from: "bot",
-      text: "Hi! I'm the PAIB Knowledge Assistant. Ask me about PAIB, programs, services or how to get involved.",
-    },
-  ]);
+  const [typing, setTyping] = useState(false);
+  const [msgs, setMsgs] = useState<Msg[]>([intro]);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [msgs, open]);
+  }, [msgs, typing, open]);
 
-  function ask(q: string) {
-    const question = q.trim();
-    if (!question) return;
-    setMsgs((m) => [...m, { from: "user", text: question }, { from: "bot", text: findAnswer(question) }]);
+  function ask(question: string, direct?: Faq) {
+    const q = question.trim();
+    if (!q || typing) return;
+    setMsgs((m) => [...m, { from: "user", text: q }]);
+    setInput("");
+    setTyping(true);
+
+    const faq = direct ?? matchFaq(q);
+    const reply: Msg = faq
+      ? { from: "bot", text: faq.a, link: faq.link, next: byId(faq.next ?? []) }
+      : { from: "bot", text: fallback.a, link: fallback.link, next: byId(starterIds).slice(0, 3) };
+
+    setTimeout(() => {
+      setMsgs((m) => [...m, reply]);
+      setTyping(false);
+    }, 600);
+  }
+
+  function clearChat() {
+    setMsgs([intro]);
+    setTyping(false);
     setInput("");
   }
+
+  const lastIndex = msgs.length - 1;
 
   return (
     <>
       {open && (
-        <div className="fixed bottom-24 right-4 z-50 flex h-[480px] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-ivory/15 bg-ink text-ivory shadow-2xl">
+        <div className="fixed bottom-24 right-4 z-50 flex h-[520px] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-ivory/15 bg-ink text-ivory shadow-2xl md:max-w-md">
           <div className="flex items-center justify-between border-b border-ivory/10 bg-forest px-4 py-3">
             <div>
               <div className="font-display text-sm font-bold">PAIB Assistant</div>
               <div className="font-mono text-[10px] tracking-widest text-jade">KNOWLEDGE BASE</div>
             </div>
-            <button onClick={() => setOpen(false)} className="text-sm text-ivory/60 hover:text-ivory">
-              Close
-            </button>
+            <div className="flex items-center gap-4 text-xs text-ivory/60">
+              <button onClick={clearChat} className="hover:text-ivory">
+                Clear
+              </button>
+              <button onClick={() => setOpen(false)} className="hover:text-ivory">
+                Close
+              </button>
+            </div>
           </div>
 
           <div className="flex-1 space-y-3 overflow-y-auto p-4 text-sm">
             {msgs.map((m, i) => (
               <div key={i} className={m.from === "user" ? "text-right" : ""}>
                 <span
-                  className={`inline-block max-w-[85%] rounded-2xl px-4 py-2.5 text-left leading-relaxed ${
+                  className={`inline-block max-w-[88%] rounded-2xl px-4 py-2.5 text-left leading-relaxed ${
                     m.from === "user" ? "bg-jade text-ink" : "bg-forest text-ivory/90"
                   }`}
                 >
                   {m.text}
                 </span>
+
+                {m.from === "bot" && m.link && (
+                  <div className="mt-2">
+                    <Link
+                      href={m.link.href}
+                      onClick={() => setOpen(false)}
+                      className="inline-block rounded-full bg-gold px-4 py-1.5 text-xs font-semibold text-ink transition hover:bg-jade"
+                    >
+                      {m.link.label} →
+                    </Link>
+                  </div>
+                )}
+
+                {m.from === "bot" && i === lastIndex && !typing && m.next && m.next.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {m.next.map((f) => (
+                      <button
+                        key={f.id}
+                        onClick={() => ask(f.q, f)}
+                        className="rounded-full border border-gold/40 px-3 py-1.5 text-xs text-gold transition hover:bg-gold hover:text-ink"
+                      >
+                        {f.q}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
-            {msgs.length === 1 && (
-              <div className="flex flex-wrap gap-2 pt-1">
-                {faqs.slice(0, 5).map((f) => (
-                  <button
-                    key={f.q}
-                    onClick={() => ask(f.q)}
-                    className="rounded-full border border-gold/40 px-3 py-1.5 text-xs text-gold transition hover:bg-gold hover:text-ink"
-                  >
-                    {f.q}
-                  </button>
-                ))}
+
+            {typing && (
+              <div>
+                <span className="inline-flex items-center gap-1 rounded-2xl bg-forest px-4 py-3">
+                  {[0, 1, 2].map((d) => (
+                    <span
+                      key={d}
+                      className="h-1.5 w-1.5 animate-bounce rounded-full bg-ivory/60"
+                      style={{ animationDelay: `${d * 0.15}s` }}
+                    />
+                  ))}
+                </span>
               </div>
             )}
             <div ref={endRef} />

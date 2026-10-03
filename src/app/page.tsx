@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
-import Pillars from "@/components/Pillars";
+import ScrollStory from "@/components/ScrollStory";
 import AgenticAI from "@/components/AgenticAI";
 import ProjectsPreview from "@/components/ProjectsPreview";
 import TeamSection from "@/components/TeamSection";
@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <Hero />
       <Marquee />
-      <Pillars />
+     <ScrollStory />
       <AgenticAI />
       <ProjectsPreview />
       <TeamSection />
