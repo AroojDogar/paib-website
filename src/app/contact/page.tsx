@@ -3,6 +3,7 @@ import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import ContactForm from "@/components/ContactForm";
 import { site } from "@/data/site";
+import { T } from "@/lib/lang";
 
 export const metadata: Metadata = { title: "Contact | PAIB" };
 
@@ -12,13 +13,27 @@ export default function Contact() {
   return (
     <>
       <PageHero
-        eyebrow="CONTACT"
+        eyebrow={<T en="CONTACT" ur="رابطہ" />}
         title={
-          <>
-            Let&apos;s talk about <span className="text-gradient">what&apos;s next</span>.
-          </>
+          <T
+            en={
+              <>
+                Let&apos;s talk about <span className="text-gradient">what&apos;s next</span>.
+              </>
+            }
+            ur={
+              <>
+                آئیں بات کریں کہ <span className="text-gradient">آگے کیا</span> ہے۔
+              </>
+            }
+          />
         }
-        text="Students, businesses and future team members: tell us what you are looking for."
+        text={
+          <T
+            en="Students, businesses and future team members: tell us what you are looking for."
+            ur="طلبہ، کاروباری ادارے اور مستقبل کے ٹیم ممبرز: ہمیں بتائیں آپ کیا تلاش کر رہے ہیں۔"
+          />
+        }
       />
 
       <section className="mx-auto grid max-w-6xl gap-10 px-5 py-24 md:grid-cols-[1.2fr_1fr]">
@@ -29,20 +44,27 @@ export default function Contact() {
         <Reveal delay={0.1}>
           <div className="space-y-8">
             <div>
-              <div className="font-mono text-xs tracking-widest text-gold-deep">EMAIL</div>
+              <div className="font-mono text-xs tracking-widest text-gold-deep">
+                <T en="EMAIL" ur="ای میل" />
+              </div>
               {c.emails.map((e) => (
-                <a key={e} href={`mailto:${e}`} className="mt-1 block text-lg hover:text-jade">
-                  {e}
-                </a>
+                <div key={e}>
+                  <a dir="ltr" href={`mailto:${e}`} className="mt-1 inline-block text-lg hover:text-jade">
+                    {e}
+                  </a>
+                </div>
               ))}
             </div>
 
             {c.phone && (
               <div>
-                <div className="font-mono text-xs tracking-widest text-gold-deep">PHONE</div>
+                <div className="font-mono text-xs tracking-widest text-gold-deep">
+                  <T en="PHONE" ur="فون" />
+                </div>
                 <a
+                  dir="ltr"
                   href={`tel:${c.phone.replace(/\s/g, "")}`}
-                  className="mt-1 block text-lg hover:text-jade"
+                  className="mt-1 inline-block text-lg hover:text-jade"
                 >
                   {c.phone}
                 </a>
@@ -51,14 +73,18 @@ export default function Contact() {
 
             {c.address && (
               <div>
-                <div className="font-mono text-xs tracking-widest text-gold-deep">OFFICE</div>
+                <div className="font-mono text-xs tracking-widest text-gold-deep">
+                  <T en="OFFICE" ur="دفتر" />
+                </div>
                 <p className="mt-1 text-lg">{c.address}</p>
               </div>
             )}
 
             {c.hours.length > 0 && (
               <div>
-                <div className="font-mono text-xs tracking-widest text-gold-deep">HOURS</div>
+                <div className="font-mono text-xs tracking-widest text-gold-deep">
+                  <T en="HOURS" ur="اوقاتِ کار" />
+                </div>
                 {c.hours.map((h) => (
                   <p key={h} className="mt-1 text-ink/70">
                     {h}

@@ -5,9 +5,9 @@ export default function PageHero({
   title,
   text,
 }: {
-  eyebrow: string;
+  eyebrow: React.ReactNode;
   title: React.ReactNode;
-  text?: string;
+  text?: React.ReactNode;
 }) {
   return (
     <section className="grain relative overflow-hidden bg-ink py-20 text-ivory md:py-28">

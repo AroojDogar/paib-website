@@ -1,6 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Reveal from "./Reveal";
 import { team } from "@/data/team";
+import { useLang } from "@/lib/lang";
+
+const roleUr: Record<string, string> = {
+  "Board of Director": "بورڈ آف ڈائریکٹر",
+  "Head of Program": "ہیڈ آف پروگرام",
+  "Deputy Director – Training & Programs": "ڈپٹی ڈائریکٹر – ٹریننگ اور پروگرامز",
+  "Assistant Director – Programs": "اسسٹنٹ ڈائریکٹر – پروگرامز",
+};
 
 function initials(name: string) {
   return name
@@ -13,13 +23,15 @@ function initials(name: string) {
 }
 
 export default function TeamSection() {
+  const { lang, t } = useLang();
+
   return (
     <section className="bg-forest py-24 text-ivory">
       <div className="mx-auto max-w-6xl px-5">
         <Reveal>
-          <p className="font-mono text-xs tracking-[0.3em] text-gold">THE TEAM</p>
+          <p className="font-mono text-xs tracking-[0.3em] text-gold">{t("THE TEAM", "ہماری ٹیم")}</p>
           <h2 className="mt-3 max-w-2xl font-display text-4xl font-extrabold md:text-5xl">
-            The people behind PAIB.
+            {t("The people behind PAIB.", "PAIB کے پیچھے کام کرنے والے لوگ۔")}
           </h2>
         </Reveal>
 
@@ -36,10 +48,10 @@ export default function TeamSection() {
                       sizes="96px"
                       className="object-cover"
                       style={{
-  objectPosition: m.focus ?? "50% 20%",
-  transform: `scale(${m.zoom ?? 1})`,
-  transformOrigin: m.focus ?? "50% 20%",
-}}
+                        objectPosition: m.focus ?? "50% 20%",
+                        transform: `scale(${m.zoom ?? 1})`,
+                        transformOrigin: m.focus ?? "50% 20%",
+                      }}
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-forest font-display text-2xl font-bold text-jade">
@@ -48,7 +60,9 @@ export default function TeamSection() {
                   )}
                 </div>
                 <div className="mt-4 font-display text-xl font-bold">{m.name}</div>
-                <div className="mt-1 text-sm text-gold">{m.role}</div>
+                <div className="mt-1 text-sm text-gold">
+                  {lang === "ur" ? roleUr[m.role] ?? m.role : m.role}
+                </div>
               </div>
             </Reveal>
           ))}
