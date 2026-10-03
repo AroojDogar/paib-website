@@ -1,17 +1,25 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Wordmark from "./Wordmark";
+import LangToggle from "./LangToggle";
+import { useLang } from "@/lib/lang";
 import { site } from "@/data/site";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const { lang, t } = useLang();
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+  const label = (item: (typeof site.nav)[number]) => (lang === "ur" ? item.ur : item.label);
 
   return (
     <header className="sticky top-0 z-50 border-b border-ivory/10 bg-ink/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <Link href="/" aria-label="PAIB home">
+        <Link href="/" aria-label="PAIB home" dir="ltr">
           <Wordmark onDark showTagline />
         </Link>
 
@@ -20,27 +28,38 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="group relative text-sm text-ivory/70 transition hover:text-ivory"
+              className={`group relative text-sm transition hover:text-ivory ${
+                isActive(item.href) ? "text-ivory" : "text-ivory/70"
+              }`}
             >
-              {item.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold transition-all group-hover:w-full" />
+              {label(item)}
+              <span
+                className={`absolute -bottom-1 left-0 h-px bg-gold transition-all ${
+                  isActive(item.href) ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              />
             </Link>
           ))}
+          <LangToggle />
           <Link
             href="/contact"
             className="rounded-full bg-gold px-5 py-2 text-sm font-semibold text-ink transition hover:bg-jade"
           >
-            Join PAIB
+            {t("Join PAIB", "PAIB میں شامل ہوں")}
           </Link>
         </nav>
 
-        <button
-          className="text-sm text-ivory md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? "Close" : "Menu"}
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+          <LangToggle />
+          <button
+            className="text-sm text-ivory"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+            aria-expanded={open}
+          >
+            {open ? t("Close", "بند کریں") : t("Menu", "مینو")}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -50,13 +69,13 @@ export default function Header() {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="text-ivory/80"
+              className={isActive(item.href) ? "font-semibold text-gold" : "text-ivory/80"}
             >
-              {item.label}
+              {label(item)}
             </Link>
           ))}
           <Link href="/contact" onClick={() => setOpen(false)} className="font-semibold text-gold">
-            Join PAIB →
+            {t("Join PAIB", "PAIB میں شامل ہوں")}
           </Link>
         </nav>
       )}

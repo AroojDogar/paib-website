@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Sora, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Sora, IBM_Plex_Mono, Noto_Nastaliq_Urdu } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Assistant from "@/components/Assistant";
+import { LangProvider } from "@/lib/lang";
 import { site } from "@/data/site";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -12,6 +13,10 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-plex-mono",
+});
+const urdu = Noto_Nastaliq_Urdu({
+  subsets: ["arabic"],
+  variable: "--font-urdu",
 });
 
 export const metadata: Metadata = {
@@ -37,13 +42,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${sora.variable} ${plexMono.variable}`}
+      suppressHydrationWarning
+      className={`${inter.variable} ${sora.variable} ${plexMono.variable} ${urdu.variable}`}
     >
       <body className="antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <Assistant />
+        <LangProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <Assistant />
+        </LangProvider>
       </body>
     </html>
   );

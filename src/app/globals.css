@@ -8,9 +8,9 @@
   --color-gold-deep: #9a7418;
   --color-ivory: #f6f1e7;
 
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-sora);
-  --font-mono: var(--font-plex-mono);
+    --font-sans: var(--font-inter), var(--font-urdu);
+  --font-display: var(--font-sora), var(--font-urdu);
+  --font-mono: var(--font-plex-mono), var(--font-urdu);
 }
 
 html {
@@ -50,4 +50,34 @@ body {
   display: flex;
   width: max-content;
   animation: marquee 35s linear infinite;
+}
+::selection {
+  background: #14b87a;
+  color: #04120e;
+}
+
+:focus-visible {
+  outline: 2px solid #e8b84a;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee-track {
+    animation: none;
+  }
+}
+/* Urdu (right-to-left) support */
+html[lang="ur"] * {
+  letter-spacing: normal !important;
+}
+html[lang="ur"] body {
+  line-height: 2;
+}
+html[lang="ur"] h1,
+html[lang="ur"] h2,
+html[lang="ur"] h3 {
+  line-height: 1.7 !important;
 }

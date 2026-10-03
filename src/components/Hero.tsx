@@ -2,15 +2,34 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useLang } from "@/lib/lang";
 import { site } from "@/data/site";
 
-const steps = [
-  { word: "LEARN", note: "Practical technology skills", color: "text-jade", dot: "bg-jade" },
-  { word: "BUILD", note: "Real AI and blockchain solutions", color: "text-ivory", dot: "bg-ivory" },
-  { word: "EARN", note: "Professional and business opportunities", color: "text-gold", dot: "bg-gold" },
-];
-
 export default function Hero() {
+  const { lang, t } = useLang();
+  const arrow = lang === "ur" ? "←" : "→";
+
+  const steps = [
+    {
+      word: t("LEARN", "سیکھیں"),
+      note: t("Practical technology skills", "عملی ٹیکنالوجی مہارتیں"),
+      color: "text-jade",
+      dot: "bg-jade",
+    },
+    {
+      word: t("BUILD", "بنائیں"),
+      note: t("Real AI and blockchain solutions", "حقیقی AI اور بلاک چین حل"),
+      color: "text-ivory",
+      dot: "bg-ivory",
+    },
+    {
+      word: t("EARN", "کمائیں"),
+      note: t("Professional and business opportunities", "پیشہ ورانہ اور کاروباری مواقع"),
+      color: "text-gold",
+      dot: "bg-gold",
+    },
+  ];
+
   return (
     <section className="grain relative overflow-hidden bg-ink text-ivory">
       <div
@@ -35,7 +54,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/5 px-4 py-1.5 font-mono text-[11px] tracking-[0.25em] text-gold"
           >
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
-            {site.fullName.toUpperCase()}
+            {lang === "ur" ? site.fullNameUr : site.fullName.toUpperCase()}
           </motion.p>
 
           <motion.h1
@@ -44,11 +63,12 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="mt-6 font-display text-5xl font-extrabold leading-[1.03] tracking-tight md:text-7xl"
           >
-            <span className="text-jade">Learn</span> it.
+            <span className="text-jade">{t("Learn", "سیکھیں")}</span>
+            {t(" it.", "۔")}
             <br />
-            Build it.
+            {t("Build it.", "بنائیں۔")}
             <br />
-            <span className="text-gradient">Earn from it.</span>
+            <span className="text-gradient">{t("Earn from it.", "اور اس سے کمائیں۔")}</span>
           </motion.h1>
 
           <motion.p
@@ -57,7 +77,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-6 max-w-xl text-lg leading-relaxed text-ivory/70"
           >
-            {site.description}
+            {lang === "ur" ? site.descriptionUr : site.description}
           </motion.p>
 
           <motion.div
@@ -70,13 +90,13 @@ export default function Hero() {
               href="/learn"
               className="rounded-full bg-jade px-7 py-3.5 text-sm font-semibold text-ink shadow-[0_0_30px_-5px_#14b87a] transition hover:bg-gold hover:shadow-[0_0_30px_-5px_#e8b84a]"
             >
-              Start Learning
+              {t("Start Learning", "سیکھنا شروع کریں")}
             </Link>
             <Link
               href="/build"
               className="rounded-full border border-ivory/25 px-7 py-3.5 text-sm font-semibold transition hover:border-gold hover:text-gold"
             >
-              Work With PAIB
+              {t("Work With PAIB", "PAIB کے ساتھ کام کریں")}
             </Link>
           </motion.div>
 
@@ -92,14 +112,14 @@ export default function Hero() {
                 href={c.href}
                 className="underline-offset-4 transition hover:text-gold hover:underline"
               >
-                {c.label} →
+                {lang === "ur" ? c.ur : c.label} {arrow}
               </Link>
             ))}
           </motion.div>
         </div>
 
         {/* Animated LEARN > BUILD > EARN flow */}
-        <div className="relative pl-10">
+        <div className="relative pl-10" dir="ltr">
           <div className="absolute bottom-4 left-[11px] top-4 w-px bg-gradient-to-b from-jade via-ivory/40 to-gold" />
           <motion.span
             className="absolute left-[7px] h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_14px_3px_rgba(255,255,255,0.7)]"
@@ -110,7 +130,7 @@ export default function Hero() {
           <div className="flex flex-col gap-5">
             {steps.map((s, i) => (
               <motion.div
-                key={s.word}
+                key={i}
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 + i * 0.15 }}
