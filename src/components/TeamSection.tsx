@@ -30,9 +30,9 @@ export default function TeamSection() {
     <section className="bg-forest py-24 text-ivory">
       <div className="mx-auto max-w-6xl px-5">
         <Reveal>
-          <p className="font-mono text-xs tracking-[0.3em] text-gold">{t("THE TEAM", "ہماری ٹیم")}</p>
+          <p className="font-mono text-xs tracking-[0.3em] text-gold">{t("MANAGEMENT", "انتظامیہ")}</p>
           <h2 className="mt-3 max-w-2xl font-display text-4xl font-extrabold md:text-5xl">
-            {t("The people behind PAIB.", "PAIB کے پیچھے کام کرنے والے لوگ۔")}
+            {t("The leadership behind PAIB.", "PAIB کی قیادت۔")}
           </h2>
         </Reveal>
 

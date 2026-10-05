@@ -37,9 +37,4 @@ export const team: TeamMember[] = [
     role: "Assistant Director – Programs",
     photo: "/arooj.jpeg",
   },
-  {
-    name: "Faisal",
-    role: "Assistant Director – Programs",
-    photo: "/faisal.jpeg",
-  },
 ];

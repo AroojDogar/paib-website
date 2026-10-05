@@ -154,8 +154,8 @@ export const faqs: Faq[] = [
   },
   {
     id: "team",
-    q: "Who is on the PAIB team?",
-    qUr: "PAIB کی ٹیم میں کون ہیں؟",
+    q: "Who is on the PAIB management team?",
+    qUr: "PAIB کی انتظامیہ میں کون ہیں؟",
     keywords: ["team", "management", "leadership", "director", "head of program", "staff", "people behind"],
     keywordsUr: ["ٹیم", "انتظامیہ", "قیادت", "ڈائریکٹر", "عملہ"],
     a: "You can meet the PAIB leadership and program team on our Team page.",

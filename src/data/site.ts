@@ -31,7 +31,7 @@ export const site = {
     { label: "Build", ur: "بنائیں", href: "/build" },
     { label: "Earn", ur: "کمائیں", href: "/earn" },
     { label: "Projects", ur: "پراجیکٹس", href: "/projects" },
-    { label: "Team", ur: "ٹیم", href: "/team" },
+    { label: "Management", ur: "انتظامیہ", href: "/team" },
     { label: "Contact", ur: "رابطہ", href: "/contact" },
   ],
 

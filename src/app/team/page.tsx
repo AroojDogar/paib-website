@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import TeamSection from "@/components/TeamSection";
+import CommunitySection from "@/components/CommunitySection";
 import { T } from "@/lib/lang";
 
-export const metadata: Metadata = { title: "Team | PAIB" };
+export const metadata: Metadata = { title: "Management | PAIB" };
 
 export default function Team() {
   return (
     <>
       <PageHero
-        eyebrow={<T en="TEAM" ur="ٹیم" />}
+        eyebrow={<T en="MANAGEMENT" ur="انتظامیہ" />}
         title={
           <T
             en={
@@ -26,12 +27,13 @@ export default function Team() {
         }
         text={
           <T
-            en="Leaders, trainers and builders working to bring AI and blockchain to Pakistan."
-            ur="قائدین، ٹرینرز اور بنانے والے جو پاکستان میں AI اور بلاک چین لانے کے لیے کام کر رہے ہیں۔"
+            en="Our leadership, and the developers and team members building with PAIB."
+            ur="ہماری قیادت، اور وہ ڈیولپرز اور ٹیم ممبرز جو PAIB کے ساتھ بنا رہے ہیں۔"
           />
         }
       />
       <TeamSection />
+      <CommunitySection />
     </>
   );
 }
