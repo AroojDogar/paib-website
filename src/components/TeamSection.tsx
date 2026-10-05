@@ -6,7 +6,8 @@ import { team } from "@/data/team";
 import { useLang } from "@/lib/lang";
 
 const roleUr: Record<string, string> = {
-  "Board of Director": "بورڈ آف ڈائریکٹر",
+  "Executive Director": "ایگزیکٹو ڈائریکٹر",
+  "Director": "ڈائریکٹر",
   "Head of Program": "ہیڈ آف پروگرام",
   "Deputy Director – Training & Programs": "ڈپٹی ڈائریکٹر – ٹریننگ اور پروگرامز",
   "Assistant Director – Programs": "اسسٹنٹ ڈائریکٹر – پروگرامز",

@@ -3,14 +3,19 @@ export type TeamMember = {
   role: string;
   photo?: string;
   focus?: string; // crop anchor, e.g. "50% 10%"
-  zoom?: number;  // 1 = normal, 1.5 = zoomed in
+  zoom?: number; // 1 = normal, 1.5 = zoomed in
 };
 
 export const team: TeamMember[] = [
   {
     name: "Squadron Leader (R) Mohammad Iqbal Khan",
-    role: "Board of Director",
+    role: "Executive Director",
     photo: "/iqbal.jpeg",
+  },
+  {
+    name: "Aamina Riffat",
+    role: "Director",
+    photo: "/aamina.jpeg",
   },
   {
     name: "Mian Muhammad Asif Langrah",
@@ -20,7 +25,7 @@ export const team: TeamMember[] = [
   {
     name: "Zeeshan",
     role: "Deputy Director – Training & Programs",
-    // photo: "/zeeshan.jpeg", // uncomment when you add his photo
+    photo: "/zeeshan.jpeg",
   },
   {
     name: "Maham Hanif",
@@ -28,10 +33,10 @@ export const team: TeamMember[] = [
     photo: "/maham.jpeg",
   },
   {
-  name: "Arooj Dogar",
-  role: "Assistant Director – Programs",
-  photo: "/arooj-new.jpeg",
-},
+    name: "Arooj Dogar",
+    role: "Assistant Director – Programs",
+    photo: "/arooj.jpeg",
+  },
   {
     name: "Faisal",
     role: "Assistant Director – Programs",
